@@ -62,6 +62,12 @@ class SerialChooserController final : public SerialChooserContext::PortObserver,
 
   base::WeakPtr<SerialChooserContext> chooser_context_;
 
+  base::ScopedObservation<SerialChooserContext,
+                          SerialChooserContext::PortObserver,
+                          &SerialChooserContext::AddPortObserver,
+                          &SerialChooserContext::RemovePortObserver>
+      observation_{this};
+
   std::vector<device::mojom::SerialPortInfoPtr> ports_;
 
   base::WeakPtr<ElectronSerialDelegate> serial_delegate_;
